@@ -5,7 +5,24 @@
   "projects": {
     "otshop-frontend": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "css",
+          "standalone": true,
+          "type": "component"
+        },
+        "@schematics/angular:directive": {
+          "standalone": true,
+          "type": "directive"
+        },
+        "@schematics/angular:pipe": {
+          "standalone": true,
+          "type": "pipe"
+        },
+        "@schematics/angular:service": {
+          "type": "service"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
