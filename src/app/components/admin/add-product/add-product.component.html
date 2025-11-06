@@ -1,0 +1,52 @@
+<div class="form-container">
+    <h2>Add New Product</h2>
+
+    <div class="alert error" *ngIf="errorMsg">{{ errorMsg }}</div>
+    <div class="alert success" *ngIf="successMsg">{{ successMsg }}</div>
+
+    <form (ngSubmit)="onSubmit()">
+        <!-- existing fields -->
+        <label>Product Name *</label>
+        <input type="text" [(ngModel)]="productName" name="productName" required />
+
+        <label>Description</label>
+        <textarea [(ngModel)]="description" name="description" rows="3"></textarea>
+
+        <label>Condition *</label>
+        <select [(ngModel)]="condition" name="condition" required>
+            <option value="" disabled>Select condition...</option>
+            <option *ngFor="let c of conditions" [value]="c.value">{{ c.label }}</option>
+        </select>
+
+        <label>Price (RSD) *</label>
+        <div class="price-field">
+            <input type="number" [(ngModel)]="price" name="price" min="0" placeholder="2500" required />
+            <span class="suffix">RSD</span>
+        </div>
+
+        <label>For (Age/Sex) *</label>
+        <select [(ngModel)]="selectedAgeSexId" name="ageSex" (change)="onAgeSexChange()" required>
+            <option [ngValue]="null" disabled selected>Select Age/Sex...</option>
+            <option *ngFor="let a of ageSexList" [ngValue]="a.idAgeSex">{{ a.ageSexGroup }}</option>
+        </select>
+
+        <label>Category *</label>
+        <select [(ngModel)]="selectedCategoryId" name="category" [disabled]="!selectedAgeSexId || loadingCategories"
+            required>
+            <option [ngValue]="null" disabled selected>Select category...</option>
+            <option *ngFor="let c of categoriesForSelected" [ngValue]="c.idCategory">{{ c.categoryName }}</option>
+        </select>
+
+        <!-- 🖼️ Image Upload -->
+        <label>Product Images *</label>
+        <input type="file" (change)="onFileSelected($event)" multiple accept="image/*" />
+        <div class="preview-container" *ngIf="selectedFiles.length > 0">
+            <div *ngFor="let file of selectedFiles" class="preview-item">
+                <img [src]="file ? (file | filePreview) : ''" alt="Preview" />
+                <p>{{ file.name }}</p>
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="submitting">Add Product</button>
+    </form>
+</div>

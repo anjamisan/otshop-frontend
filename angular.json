@@ -16,8 +16,7 @@
           "type": "directive"
         },
         "@schematics/angular:pipe": {
-          "standalone": true,
-          "type": "pipe"
+          "standalone": true
         },
         "@schematics/angular:service": {
           "type": "service"

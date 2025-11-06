@@ -36,9 +36,27 @@ export class LoginComponent {
           this.message = `Welcome, ${user.username}! Redirecting...`;
           this.messageColor = 'green';
 
+
           // kratko odlaganje redirekcije da bi se procitala poruka
           setTimeout(() => {
-            this.router.navigate(['/home']);
+            if (user.admin) {
+              console.log("Admin true: ", user.admin);
+              console.log("Email: ", user.email);
+              console.log("name: ", user.username);
+
+              console.log("pass: ", user.idUser);
+
+              this.router.navigate(['/admin']);
+            } else {
+              console.log("Admin false: ", user.admin);
+              console.log("Email: ", user.email);
+              console.log("name: ", user.username);
+
+              console.log("pass: ", user.idUser);
+
+
+              this.router.navigate(['/home']);
+            }
           }, 5000);
         },
         error: (err: HttpErrorResponse) => {

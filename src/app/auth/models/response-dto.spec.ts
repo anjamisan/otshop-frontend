@@ -1,7 +1,9 @@
-import { ResponseDto } from './response-dto';
+import { AuthResponseDTO } from './response-dto';
 
-describe('ResponseDto', () => {
-  it('should create an instance', () => {
-    expect(new ResponseDto()).toBeTruthy();
+describe('AuthResponseDTO', () => {
+  it('should have correct structure', () => {
+    const response: AuthResponseDTO = { jwtToken: 'abc123', expiresIn: 3600 };
+    expect(response).toBeTruthy();
+    expect(response.jwtToken).toBe('abc123');
   });
 });
