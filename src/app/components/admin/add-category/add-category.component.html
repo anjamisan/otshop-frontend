@@ -1,0 +1,23 @@
+<div class="add-category-container">
+    <h2>Add New Category</h2>
+
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="agesex">Select Age/Sex Group:</label>
+            <select id="agesex" [(ngModel)]="selectedAgesexId" name="agesex">
+                <option [ngValue]="null" disabled selected>Select...</option>
+                <option *ngFor="let age of agesexList" [ngValue]="age.idAgeSex">
+                    {{ age.ageSexGroup }}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="categoryName">Category Name:</label>
+            <input id="categoryName" type="text" [(ngModel)]="categoryName" name="categoryName"
+                placeholder="Enter category name" />
+        </div>
+
+        <button type="submit" class="btn">Add Category</button>
+    </form>
+</div>

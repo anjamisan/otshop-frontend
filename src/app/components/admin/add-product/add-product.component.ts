@@ -5,13 +5,14 @@ import { AgesexDto } from '../../../models/agesex-dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryDto } from '../../../models/category-dto';
 import { AddProductDto } from '../../../models/add-product-dto';
-import { AddProductService } from '../../../services/add-product.service';
 import { FilePreviewPipe } from '../../../pipes/file-preview-pipe';
+import { RouterLink } from '@angular/router';
+import { AdminService } from '../../../services/admin.service';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [CommonModule, FormsModule, FilePreviewPipe],
+  imports: [CommonModule, FormsModule, FilePreviewPipe, RouterLink],
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
@@ -44,7 +45,7 @@ export class AddProductComponent implements OnInit {
     { value: 'SATISFACTORY', label: 'Satisfactory' }
   ] as const;
 
-  constructor(private api: AddProductService) { }
+  constructor(private api: AdminService) { }
 
   ngOnInit(): void {
     this.fetchAgeSex();

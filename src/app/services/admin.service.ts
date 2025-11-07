@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AddProductDto } from '../models/add-product-dto';
 import { AgesexDto } from '../models/agesex-dto';
 import { CategoryDto } from '../models/category-dto';
+import { AddCategoryDto } from '../models/add-category-dto';
 
 
 @Injectable({ providedIn: 'root' })
-export class AddProductService {
+export class AdminService {
   private baseUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) { }
@@ -21,8 +21,13 @@ export class AddProductService {
   }
 
   createProduct(payload: FormData): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/products`, payload);
+    return this.http.post<void>(`${this.baseUrl}/products/create`, payload);
   }
+
+  addCategory(dto: AddCategoryDto): Observable<any> {
+    return this.http.post(`${this.baseUrl}/agesex/add-category`, dto);
+  }
+
 }
 
 

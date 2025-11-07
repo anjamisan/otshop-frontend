@@ -1,8 +1,20 @@
 <header>
-    <nav>
-        <a routerLink="/signup">Sign up</a>
-        <a routerLink="/login">Login</a>
-        <a routerLink="/">Home</a>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a routerLink="/">Home</a>
+        </div>
+
+        <div class="nav-right" *ngIf="isLoggedIn; else loggedOutLinks">
+            <a routerLink="/profile" class="profile-link">Profile</a>
+            <a (click)="logout()" class="logout-link">Log out</a>
+        </div>
+
+        <ng-template #loggedOutLinks>
+            <div class="nav-right">
+                <a routerLink="/login">Login</a>
+                <a routerLink="/signup">Sign up</a>
+            </div>
+        </ng-template>
     </nav>
 </header>
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, EMPTY, filter, Observable, switchMap, tap } from 'rxjs';
+import { HttpClient, HttpBackend, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, catchError, EMPTY, filter, map, Observable, switchMap, tap } from 'rxjs';
 import { UserDTO } from '../models/user-dto';
 import { LoginRequestDTO } from '../models/log-req-dto';
 import { AuthResponseDTO } from '../models/response-dto';
@@ -26,13 +26,21 @@ export class AuthService {
   private readonly TOKEN_KEY = 'jwt_token';
 
   private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);
-  currentUser$ = this.currentUserSubject.asObservable();
+  currentUser$ = this.currentUserSubject.asObservable(); //menjamo iz subjecta u observable kako druge komponente ne bi mogle da menjaju subject pozivom .next-a. observable to ne dozvoljava
+  private httpWithoutInterceptor: HttpClient;
 
+  constructor(
+    private http: HttpClient,
+    private httpBackend: HttpBackend
+  ) {
+    // ✅ initialize it here, after httpBackend exists
+    this.httpWithoutInterceptor = new HttpClient(this.httpBackend);
 
-  constructor(private http: HttpClient) {
-    // Load initial state on app start
+    // then safely load user state
     this.loadUserState();
   }
+
+
 
   private decodeJwt(token: string): JwtPayload | null {
     try {
@@ -79,17 +87,25 @@ export class AuthService {
   }
 
   profile(): Observable<UserDTO> {
-    return this.http.get<UserDTO>(`${this.authUrl}/profile`).pipe(
+    const token = this.getAuthToken();
+
+    if (!token) {
+      console.warn('⚠️ No token found when trying to fetch profile.');
+      return EMPTY;
+    }
+
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.httpWithoutInterceptor.get<UserDTO>(`${this.authUrl}/profile`, { headers }).pipe(
       tap(user => {
-        //apdejtuj trenutnog usera
         this.currentUserSubject.next(user);
       }),
       catchError(err => {
         if (err.status === 401 || err.status === 403) {
-          console.warn("⚠️ Unauthorized - token may be invalid or expired");
+          console.warn('⚠️ Unauthorized - token may be invalid or expired');
           this.logout();
         } else {
-          console.error("❌ Error fetching profile:", err);
+          console.error('❌ Error fetching profile:', err);
         }
         return EMPTY;
       })
@@ -123,6 +139,7 @@ export class AuthService {
     // Check if the token exists (and maybe check its expiration time)
     return !!this.getAuthToken();
   }
+  isLoggedInObs$ = this.currentUser$.pipe(map(user => user !== null));
 
   private loadUserState(): void {
     const token = this.getAuthToken();

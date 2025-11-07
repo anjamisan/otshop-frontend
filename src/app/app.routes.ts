@@ -4,6 +4,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
+import { AddCategoryComponent } from './components/admin/add-category/add-category.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'admin', component: AdminDashboardComponent },
     { path: 'admin/add-product', component: AddProductComponent },
+    { path: 'admin/add-category', component: AddCategoryComponent },
 
 ];
