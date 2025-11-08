@@ -67,11 +67,11 @@ export class AddProductComponent implements OnInit {
   onAgeSexChange(): void {
     this.selectedCategoryId = null;
     this.categoriesForSelected = [];
-    if (this.selectedAgeSexId == null) return;
+    if (this.selectedAgeSexId == null) { console.log("selected agesex id is null"); return; }
 
     this.loadingCategories = true;
     this.api.getCategoriesByAgeSex(this.selectedAgeSexId).subscribe({
-      next: (data: CategoryDto[]) => { this.categoriesForSelected = data; },
+      next: (data: CategoryDto[]) => { this.categoriesForSelected = data; console.log("Kategorije: ", data); },
       error: (err: HttpErrorResponse) => { this.errorMsg = 'Failed to load categories for selected Age/Sex.'; console.error(err); },
       complete: () => { this.loadingCategories = false; }
     });

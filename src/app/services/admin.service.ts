@@ -24,8 +24,8 @@ export class AdminService {
     return this.http.post<void>(`${this.baseUrl}/products/create`, payload);
   }
 
-  addCategory(dto: AddCategoryDto): Observable<any> {
-    return this.http.post(`${this.baseUrl}/agesex/add-category`, dto);
+  addCategory(dto: AddCategoryDto): Observable<string> {
+    return this.http.post(`${this.baseUrl}/agesex/add-category`, dto, { responseType: 'text' });
   }
 
 }

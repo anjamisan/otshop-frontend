@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar">
         <div class="nav-left">
-            <a routerLink="/">Home</a>
+            <a [routerLink]="isAdmin ? '/admin' : '/'">Home</a>
         </div>
 
         <div class="nav-right" *ngIf="isLoggedIn; else loggedOutLinks">
