@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { AgesexDto } from '../models/agesex-dto';
 import { CategoryDto } from '../models/category-dto';
 import { AddCategoryDto } from '../models/add-category-dto';
+import { AddProductDto } from '../models/add-product-dto';
+import { ProductDto } from '../models/product-dto';
 
 
 @Injectable({ providedIn: 'root' })
@@ -21,11 +23,19 @@ export class AdminService {
   }
 
   createProduct(payload: FormData): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/products/create`, payload);
+    return this.http.post<void>(`${this.baseUrl}/admin/products/create`, payload);
   }
 
   addCategory(dto: AddCategoryDto): Observable<string> {
     return this.http.post(`${this.baseUrl}/agesex/add-category`, dto, { responseType: 'text' });
+  }
+
+  getAllProducts(): Observable<ProductDto[]> {
+    return this.http.get<ProductDto[]>(`${this.baseUrl}/products`);
+  }
+
+  getProductById(id: number): Observable<ProductDto> {
+    return this.http.get<ProductDto>(`${this.baseUrl}/products/${id}`);
   }
 
 }

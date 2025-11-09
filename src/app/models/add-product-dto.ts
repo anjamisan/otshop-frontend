@@ -5,4 +5,5 @@ export interface AddProductDto {
     price: number;
     ageSexId: number;
     categoryId: number;
+    images?: File[];
 }

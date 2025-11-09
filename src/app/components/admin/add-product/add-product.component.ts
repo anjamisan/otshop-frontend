@@ -89,24 +89,25 @@ export class AddProductComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('productName', this.productName);
-    formData.append('description', this.description);
+    formData.append('description', this.description || '');
     formData.append('condition', this.condition);
     formData.append('price', this.price.toString());
     formData.append('ageSexId', this.selectedAgeSexId.toString());
     formData.append('categoryId', this.selectedCategoryId.toString());
 
     for (const file of this.selectedFiles) {
-      formData.append('images', file);
+      console.log(file, file.name);
+      formData.append('images', file, file.name);
     }
 
     this.submitting = true;
     this.api.createProduct(formData).subscribe({
       next: () => {
-        this.successMsg = '✅ Product added successfully!';
+        this.successMsg = 'Product added successfully!';
         this.resetForm();
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = '❌ Failed to add product.';
+        this.errorMsg = 'Failed to add product.';
         console.error(err);
       },
       complete: () => { this.submitting = false; }

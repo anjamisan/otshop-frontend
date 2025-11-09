@@ -1,0 +1,40 @@
+<div class="container" *ngIf="!loading && product; else loadingOrError">
+    <div class="product-detail-card">
+        <h2>{{ product.productName }}</h2>
+        <p class="price">{{ product.price | currency:'RSD':'symbol' }}</p>
+        <p class="condition">Condition: {{ product.condition | conditionLabel }}</p>
+
+
+        <div class="image-viewer" *ngIf="product.imageUrls?.length">
+            <button class="nav-btn left" *ngIf="product.imageUrls.length > 1" (click)="prevImage()">&#10094;</button>
+
+            <div class="image-container" (click)="toggleZoom()">
+                <img [src]="'http://localhost:8080' + product.imageUrls[currentImageIndex]"
+                    alt="{{ product.productName }}" [class.zoomed]="isZoomed" />
+            </div>
+
+            <button class="nav-btn right" *ngIf="product.imageUrls.length > 1" (click)="nextImage()">&#10095;</button>
+        </div>
+
+        <div *ngIf="product as p">
+            <div class="thumbnails" *ngIf="p.imageUrls?.length && p.imageUrls.length > 1">
+                <img *ngFor="let url of p.imageUrls; let i = index" [src]="'http://localhost:8080' + url"
+                    [class.active]="i === currentImageIndex" (click)="setImage(i)" />
+            </div>
+        </div>
+
+        <p class="description">{{ product.description }}</p>
+        <p *ngIf="product.categoryName">Category: {{ product.categoryName }}</p>
+        <p *ngIf="product.ageSexGroup">Target group: {{ product.ageSexGroup }}</p>
+
+        <div class="actions">
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingOrError>
+    <p *ngIf="loading">Loading product...</p>
+    <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+</ng-template>

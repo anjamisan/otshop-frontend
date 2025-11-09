@@ -5,13 +5,18 @@ header {
     width: 100%;
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
-    padding: 12px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     z-index: 1000;
 }
 
+/* ✅ This is now the main flex container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+}
+
+/* Styling for links */
 .navbar a {
     text-decoration: none;
     color: #333;
@@ -24,14 +29,18 @@ header {
     color: #007bff;
 }
 
+/* Left (home) */
 .nav-left a {
     font-size: 1.1rem;
     font-weight: 600;
 }
 
+/* Right group (login/profile/logout) */
 .nav-right {
     display: flex;
     align-items: center;
+    margin-left: auto;
+    /* ✅ push to far right */
 }
 
 .profile-link {
@@ -40,6 +49,8 @@ header {
     padding: 6px 12px;
     border-radius: 20px;
     margin-right: 16px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .profile-link:hover {
@@ -55,7 +66,7 @@ header {
     text-decoration: underline;
 }
 
+/* Account for fixed header height */
 main {
     margin-top: 70px;
-    /* account for fixed navbar height */
 }
