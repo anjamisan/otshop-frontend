@@ -28,8 +28,9 @@
         <p *ngIf="product.ageSexGroup">Target group: {{ product.ageSexGroup }}</p>
 
         <div class="actions">
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
+            <button class="edit-btn" [routerLink]="['/admin/product', product.idProduct, 'edit']">
+                Edit
+            </button>
         </div>
     </div>
 </div>

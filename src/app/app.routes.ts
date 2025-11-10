@@ -7,6 +7,8 @@ import { AddProductComponent } from './components/admin/add-product/add-product.
 import { AddCategoryComponent } from './components/admin/add-category/add-category.component';
 import { AdminViewProductsComponent } from './components/admin/admin-view-products/admin-view-products.component';
 import { AdminProductDetailComponent } from './components/admin/admin-product-detail/admin-product-detail.component';
+import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -18,6 +20,6 @@ export const routes: Routes = [
     { path: 'admin/add-category', component: AddCategoryComponent },
     { path: 'admin/products', component: AdminViewProductsComponent },
     { path: 'admin/product/:id', component: AdminProductDetailComponent },
-
-
+    { path: 'admin/product/:id/edit', component: EditProductComponent },
+    { path: 'admin/users', component: UserListComponent },
 ];

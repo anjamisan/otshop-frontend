@@ -6,6 +6,7 @@ import { CategoryDto } from '../models/category-dto';
 import { AddCategoryDto } from '../models/add-category-dto';
 import { AddProductDto } from '../models/add-product-dto';
 import { ProductDto } from '../models/product-dto';
+import { UserSummaryDto } from '../models/user-summary-dto';
 
 
 @Injectable({ providedIn: 'root' })
@@ -36,6 +37,18 @@ export class AdminService {
 
   getProductById(id: number): Observable<ProductDto> {
     return this.http.get<ProductDto>(`${this.baseUrl}/products/${id}`);
+  }
+
+  updateProduct(id: number, payload: { description: string; price: number }): Observable<ProductDto> {
+    return this.http.put<ProductDto>(`${this.baseUrl}/products/${id}`, payload);
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/products/${id}`);
+  }
+
+  getAllUsers(): Observable<UserSummaryDto[]> {
+    return this.http.get<UserSummaryDto[]>(`${this.baseUrl}/admin/users`);
   }
 
 }

@@ -1,0 +1,31 @@
+<div *ngIf="product as p; else loading">
+    <h2>Edit Product: {{ p.productName }}</h2>
+
+    <div class="form-group">
+        <label>Price (RSD)</label>
+        <input type="number" [(ngModel)]="p.price" />
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="p.description" rows="4"></textarea>
+    </div>
+
+    <div class="actions">
+        <button (click)="onSave()">💾 Save Changes</button>
+        <button class="delete-btn" (click)="onDelete()">🗑️ Delete Product</button>
+    </div>
+
+    <!-- Confirmation Popup -->
+    <div class="overlay" *ngIf="confirmDelete">
+        <div class="popup">
+            <p>Are you sure you want to delete this product?</p>
+            <button class="confirm" (click)="confirmDeletion(true)">Yes, delete</button>
+            <button class="cancel" (click)="confirmDeletion(false)">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <p>Loading product...</p>
+</ng-template>

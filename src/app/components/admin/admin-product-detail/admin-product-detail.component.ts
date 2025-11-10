@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductDto } from '../../../models/product-dto';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,7 +9,7 @@ import { ConditionLabelPipe } from '../../../pipes/condition-label-pipe-pipe';
 @Component({
   selector: 'app-admin-product-detail',
   standalone: true,
-  imports: [CommonModule, ConditionLabelPipe],
+  imports: [CommonModule, ConditionLabelPipe, RouterLink],
   templateUrl: './admin-product-detail.component.html',
   styleUrls: ['./admin-product-detail.component.css']
 })

@@ -1,0 +1,25 @@
+<h2>Manage Users</h2>
+
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="errorMsg">{{ errorMsg }}</div>
+
+<table *ngIf="!loading && users.length > 0" class="user-table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Purchases</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.purchaseCount }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="!loading && users.length === 0">
+    <p>No users found.</p>
+</div>
