@@ -1,4 +1,29 @@
 <div class="home-container">
-    <h1>🏠 Welcome to the Home Page!</h1>
-    <p>This is a placeholder for your thrift shop dashboard.</p>
+    <h2>All Products</h2>
+
+    <p *ngIf="loading">Loading products...</p>
+    <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+
+    <div class="product-grid">
+        <div class="product-card" *ngFor="let p of products">
+            <div class="image-wrapper">
+                <img [src]="p.imageUrls && p.imageUrls.length > 0 ? ('http://localhost:8080' + p.imageUrls[0]) : 'assets/no-image.png'"
+                    alt="{{ p.productName }}" class="product-thumb" />
+
+                <!-- ✅ SOLD badge -->
+                <div *ngIf="p.sold" class="sold-badge">SOLD</div>
+            </div>
+            <h3>{{ p.productName }}</h3>
+            <p class="price">{{ p.price }} RSD</p>
+            <p class="condition">{{ p.condition | conditionLabel }}</p>
+
+            <button [routerLink]="['/products', p.idProduct]" [disabled]="!isLoggedIn" class="view-btn">
+                View
+            </button>
+
+            <p *ngIf="!isLoggedIn" class="login-msg">
+                Log in to view product
+            </p>
+        </div>
+    </div>
 </div>

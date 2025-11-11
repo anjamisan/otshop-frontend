@@ -1,0 +1,32 @@
+<div *ngIf="user">
+    <h2>{{ user.username }}</h2>
+    <p>Email: {{ user.email }}</p>
+
+    <h3>Purchases</h3>
+
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <table *ngIf="!loading && purchases.length > 0" class="purchase-table">
+        <thead>
+            <tr>
+                <th>Purchase ID</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of purchases">
+                <td>{{ p.idPurchase }}</td>
+                <td>{{ p.timestamp | date:'medium' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="!loading && purchases.length === 0">
+        <p>No purchases found for this user.</p>
+    </div>
+
+    <hr />
+
+    <p class="contact">Contact me on this email: <strong>{{ user.email }}</strong></p>
+</div>

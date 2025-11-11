@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthService } from './auth/service/auth.service';
@@ -10,7 +10,7 @@ import { filter } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, SignupComponent, RouterLink, CommonModule],
+  imports: [RouterOutlet, RouterLink, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -19,7 +19,7 @@ export class App implements OnInit {
   isLoggedIn = false;
   isAdmin = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.authService.isLoggedInObs$.subscribe(
@@ -32,9 +32,8 @@ export class App implements OnInit {
       });
   }
 
-
-
   logout() {
     this.authService.logout();
+    this.router.navigate(['/home']);
   }
 }

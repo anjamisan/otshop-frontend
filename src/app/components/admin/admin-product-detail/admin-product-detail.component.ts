@@ -5,6 +5,7 @@ import { ProductDto } from '../../../models/product-dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AdminService } from '../../../services/admin.service';
 import { ConditionLabelPipe } from '../../../pipes/condition-label-pipe-pipe';
+import { PurchaseDto } from '../../../models/purchase-dto';
 
 @Component({
   selector: 'app-admin-product-detail',
@@ -14,10 +15,12 @@ import { ConditionLabelPipe } from '../../../pipes/condition-label-pipe-pipe';
   styleUrls: ['./admin-product-detail.component.css']
 })
 export class AdminProductDetailComponent implements OnInit {
-  productId!: number;
+
   product: ProductDto | null = null;
   loading = true;
   errorMsg = '';
+  buyerId: number | null = null;
+
 
   // Slideshow & zoom logic
   currentImageIndex = 0;
@@ -27,13 +30,22 @@ export class AdminProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     // Extract product ID from route
-    this.productId = Number(this.route.snapshot.paramMap.get('id'));
-
+    const productId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadProduct(productId);
     // Fetch product from backend
-    this.api.getProductById(this.productId).subscribe({
+
+  }
+
+  loadProduct(productId: number): void {
+    this.loading = true;
+    this.api.getProductById(productId).subscribe({
       next: (data: ProductDto) => {
         this.product = data;
         this.loading = false;
+
+        if (this.product.sold) {
+          this.loadBuyer(productId);
+        }
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error loading product:', err);
@@ -42,6 +54,18 @@ export class AdminProductDetailComponent implements OnInit {
       }
     });
   }
+
+  loadBuyer(productId: number): void {
+    this.api.getPurchaseByProductId(productId).subscribe({
+      next: (purchase: PurchaseDto) => {
+        this.buyerId = purchase.userId;
+      },
+      error: (err) => {
+        console.error('Failed to load purchase:', err);
+      }
+    });
+  }
+
 
   nextImage(): void {
     if (!this.product?.imageUrls) return;

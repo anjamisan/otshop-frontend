@@ -9,12 +9,18 @@ import { AdminViewProductsComponent } from './components/admin/admin-view-produc
 import { AdminProductDetailComponent } from './components/admin/admin-product-detail/admin-product-detail.component';
 import { EditProductComponent } from './components/admin/edit-product/edit-product.component';
 import { UserListComponent } from './components/admin/user-list/user-list.component';
+import { UserDetailsComponent } from './components/admin/user-details/user-details.component';
+import { ViewProductComponent } from './components/view-product/view-product.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { MyPurchasesComponent } from './components/my-purchases/my-purchases.component';
+import { MyFavouritesComponent } from './components/my-favourites/my-favourites.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'home', component: HomeComponent },
+    { path: 'profile', component: ProfileComponent },
     { path: 'admin', component: AdminDashboardComponent },
     { path: 'admin/add-product', component: AddProductComponent },
     { path: 'admin/add-category', component: AddCategoryComponent },
@@ -22,4 +28,8 @@ export const routes: Routes = [
     { path: 'admin/product/:id', component: AdminProductDetailComponent },
     { path: 'admin/product/:id/edit', component: EditProductComponent },
     { path: 'admin/users', component: UserListComponent },
+    { path: 'admin/users/:id', component: UserDetailsComponent },
+    { path: 'products/:id', component: ViewProductComponent },
+    { path: 'my-purchases', component: MyPurchasesComponent },
+    { path: 'my-favourites', component: MyFavouritesComponent }
 ];

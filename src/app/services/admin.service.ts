@@ -7,6 +7,7 @@ import { AddCategoryDto } from '../models/add-category-dto';
 import { AddProductDto } from '../models/add-product-dto';
 import { ProductDto } from '../models/product-dto';
 import { UserSummaryDto } from '../models/user-summary-dto';
+import { PurchaseDto } from '../models/purchase-dto';
 
 
 @Injectable({ providedIn: 'root' })
@@ -31,10 +32,13 @@ export class AdminService {
     return this.http.post(`${this.baseUrl}/agesex/add-category`, dto, { responseType: 'text' });
   }
 
+  //ovo mogu svi
   getAllProducts(): Observable<ProductDto[]> {
-    return this.http.get<ProductDto[]>(`${this.baseUrl}/products`);
+    return this.http.get<ProductDto[]>(`${this.baseUrl}/products/preview`);
   }
 
+
+  //OVO MOZE I ZA ADMINA I ZA USERA
   getProductById(id: number): Observable<ProductDto> {
     return this.http.get<ProductDto>(`${this.baseUrl}/products/${id}`);
   }
@@ -49,6 +53,14 @@ export class AdminService {
 
   getAllUsers(): Observable<UserSummaryDto[]> {
     return this.http.get<UserSummaryDto[]>(`${this.baseUrl}/admin/users`);
+  }
+
+  getUserPurchases(userId: number): Observable<PurchaseDto[]> {
+    return this.http.get<PurchaseDto[]>(`${this.baseUrl}/users/${userId}/purchases`);
+  }
+
+  getPurchaseByProductId(productId: number): Observable<PurchaseDto> {
+    return this.http.get<PurchaseDto>(`${this.baseUrl}/products/${productId}/purchase`);
   }
 
 }

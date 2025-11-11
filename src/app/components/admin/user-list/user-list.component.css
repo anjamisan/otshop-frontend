@@ -14,3 +14,11 @@
 .user-table th {
     background-color: #f8f8f8;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover {
+    background-color: #f1f1f1;
+}

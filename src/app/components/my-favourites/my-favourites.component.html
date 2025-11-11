@@ -1,0 +1,27 @@
+<div class="favourites-container" *ngIf="!loading && favourites.length > 0; else loadingOrEmpty">
+    <h2>My Favourite Products</h2>
+
+    <div class="favourite-item" *ngFor="let p of favourites">
+        <div class="image-wrapper">
+            <img [src]="p.imageUrls && p.imageUrls.length > 0 
+                    ? ('http://localhost:8080' + p.imageUrls[0]) 
+                    : 'assets/no-image.png'" alt="{{ p.productName }}" class="product-thumb" />
+
+            <div *ngIf="p.sold" class="sold-badge">SOLD</div>
+        </div>
+
+        <div class="product-info">
+            <h3>{{ p.productName }}</h3>
+            <p>Price: {{ p.price | currency:'RSD':'symbol' }}</p>
+            <p>Condition: {{ p.condition }}</p>
+
+            <button class="view-btn" [routerLink]="['/products', p.idProduct]">View</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingOrEmpty>
+    <p *ngIf="loading">Loading your favourites...</p>
+    <p *ngIf="!loading && !errorMsg && favourites.length === 0">You have no favourite products yet.</p>
+    <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+</ng-template>

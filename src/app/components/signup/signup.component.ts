@@ -64,7 +64,7 @@ export class SignupComponent {
           this.message = `Welcome ${user.username}!`;
           setTimeout(() => {
             this.router.navigate(['/home']);
-          }, 5000);
+          }, 2000);
           this.router.navigate(['/login']);
 
           // You might check response.message here if needed

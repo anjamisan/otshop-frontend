@@ -15,11 +15,9 @@
             <button class="nav-btn right" *ngIf="product.imageUrls.length > 1" (click)="nextImage()">&#10095;</button>
         </div>
 
-        <div *ngIf="product as p">
-            <div class="thumbnails" *ngIf="p.imageUrls?.length && p.imageUrls.length > 1">
-                <img *ngFor="let url of p.imageUrls; let i = index" [src]="'http://localhost:8080' + url"
-                    [class.active]="i === currentImageIndex" (click)="setImage(i)" />
-            </div>
+        <div *ngIf="product.imageUrls?.length && product.imageUrls.length > 1" class="thumbnails">
+            <img *ngFor="let url of product.imageUrls; let i = index" [src]="'http://localhost:8080' + url"
+                [class.active]="i === currentImageIndex" (click)="setImage(i)" />
         </div>
 
         <p class="description">{{ product.description }}</p>
@@ -27,15 +25,11 @@
         <p *ngIf="product.ageSexGroup">Target group: {{ product.ageSexGroup }}</p>
 
         <div class="actions">
+            <button class="buy-btn" (click)="buyProduct()" [disabled]="product.sold">Buy</button>
 
-            <button class="edit-btn" [routerLink]="['/admin/product', product.idProduct, 'edit']"
-                [disabled]="product.sold">
-                Edit
-            </button>
-
-
-            <button *ngIf="product.sold && buyerId" class="see-buyer-btn" [routerLink]="['/admin/users', buyerId]">
-                See Buyer
+            <!-- ❤️ Favourites button -->
+            <button class="fav-btn" [ngClass]="{ 'liked': isProductLiked }" (click)="toggleFavourite()">
+                {{ isProductLiked ? '❤️ Favourite product' : '♡ Add to Favourites' }}
             </button>
         </div>
     </div>

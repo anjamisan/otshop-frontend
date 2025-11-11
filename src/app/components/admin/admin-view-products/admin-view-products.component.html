@@ -6,8 +6,15 @@
 
     <div class="product-grid">
         <div *ngFor="let p of products" class="product-card">
-            <img [src]="p.imageUrls && p.imageUrls.length > 0 ? ('http://localhost:8080' + p.imageUrls[0]) : 'assets/no-image.png'"
-                alt="{{ p.productName }}" class="product-thumb" />
+            <!-- image container for overlay -->
+            <div class="image-wrapper">
+                <img [src]="p.imageUrls && p.imageUrls.length > 0 ? ('http://localhost:8080' + p.imageUrls[0]) : 'assets/no-image.png'"
+                    alt="{{ p.productName }}" class="product-thumb" />
+
+                <!-- ✅ SOLD badge -->
+                <div *ngIf="p.sold" class="sold-badge">SOLD</div>
+            </div>
+
             <h3>{{ p.productName }}</h3>
             <p>{{ p.price | currency:'RSD':'symbol':'1.0-0' }}</p>
             <button (click)="viewProduct(p.idProduct)">View</button>

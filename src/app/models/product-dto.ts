@@ -7,4 +7,5 @@ export interface ProductDto {
     categoryName?: string;
     ageSexGroup?: string;
     imageUrls: string[];
+    sold: boolean;
 }

@@ -5,17 +5,30 @@
         </div>
 
         <div class="nav-right" *ngIf="isLoggedIn; else loggedOutLinks">
+
+
+            <ng-container *ngIf="!isAdmin">
+                <a routerLink="/my-purchases">My purchases</a>
+                <a routerLink="/my-favourites">Liked products</a>
+            </ng-container>
+
             <a routerLink="/profile" class="profile-link">Profile</a>
             <a (click)="logout()" class="logout-link">Log out</a>
         </div>
 
         <ng-template #loggedOutLinks>
             <div class="nav-right">
-                <a routerLink="/login">Login</a>
+                <a routerLink="/login">Log in</a>
                 <a routerLink="/signup">Sign up</a>
             </div>
         </ng-template>
     </nav>
 </header>
-<main class="container mt-3"> <router-outlet></router-outlet> </main>
-<footer class="text-center text-muted mt-4"> <small>© 2025 Online Thrift Shop</small> </footer>
+
+<main class="container mt-3">
+    <router-outlet></router-outlet>
+</main>
+
+<footer class="text-center text-muted mt-4">
+    <small>© 2025 Online Thrift Shop</small>
+</footer>

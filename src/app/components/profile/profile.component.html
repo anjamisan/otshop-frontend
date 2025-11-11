@@ -1,0 +1,13 @@
+<div class="profile-container" *ngIf="user; else notLoggedIn">
+    <h2>My Profile</h2>
+
+    <div class="profile-card">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Role:</strong> {{ user.admin ? 'Admin' : 'Regular User' }}</p>
+    </div>
+</div>
+
+<ng-template #notLoggedIn>
+    <p>Please log in to view your profile.</p>
+</ng-template>

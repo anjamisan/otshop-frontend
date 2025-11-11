@@ -3,4 +3,5 @@ export interface UserSummaryDto {
     username: string;
     email: string;
     purchaseCount: number;
+    admin: boolean;
 }

@@ -57,7 +57,7 @@ export class LoginComponent {
 
               this.router.navigate(['/home']);
             }
-          }, 5000);
+          }, 2000);
         },
         error: (err: HttpErrorResponse) => {
           // greska

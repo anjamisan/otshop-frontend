@@ -1,0 +1,22 @@
+.purchase-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+.purchase-table th,
+.purchase-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.purchase-table th {
+    background-color: #f8f8f8;
+}
+
+.contact {
+    margin-top: 20px;
+    font-style: italic;
+    color: #333;
+}

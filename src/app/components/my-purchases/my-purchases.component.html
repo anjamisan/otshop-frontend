@@ -1,0 +1,25 @@
+<div class="purchases-container" *ngIf="!loading && purchases.length > 0; else loadingOrEmpty">
+    <h2>My Purchases</h2>
+
+    <div class="purchase-item" *ngFor="let p of purchases">
+        <div class="image-wrapper">
+            <img [src]="p.product.imageUrls && p.product.imageUrls.length > 0 
+                    ? ('http://localhost:8080' + p.product.imageUrls[0]) 
+                    : 'assets/no-image.png'" alt="{{ p.product.productName }}" class="product-thumb" />
+            <div *ngIf="p.product.sold" class="sold-badge">SOLD</div>
+        </div>
+
+        <div class="purchase-info">
+            <h3>{{ p.product.productName }}</h3>
+            <p>Price: {{ p.product.price | currency:'RSD':'symbol' }}</p>
+            <p>Purchased on: {{ p.purchase.timestamp | date:'medium' }}</p>
+            <p class="email-msg">You will soon be contacted via email.</p>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingOrEmpty>
+    <p *ngIf="loading">Loading your purchases...</p>
+    <p *ngIf="!loading && !errorMsg && purchases.length === 0">You have no purchases yet.</p>
+    <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+</ng-template>
