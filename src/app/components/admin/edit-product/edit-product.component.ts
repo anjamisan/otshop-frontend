@@ -65,7 +65,7 @@ export class EditProductComponent implements OnInit {
       this.api.deleteProduct(this.product.idProduct).subscribe({
         next: () => {
           alert('Product deleted successfully.');
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/admin'], { replaceUrl: true });
         },
         error: (err) => {
           console.error(err);

@@ -35,4 +35,14 @@ export class UserListComponent implements OnInit {
   goToUser(id: number) {
     this.router.navigate(['/admin/users', id]); //sam ce sklopiti id
   }
+
+  openReport(): void {
+    this.api.getUserPurchaseReport().subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank'); // open in new tab with token-protected data
+      },
+      error: err => console.error(' Failed to load report:', err)
+    });
+  }
 }

@@ -63,6 +63,12 @@ export class AdminService {
     return this.http.get<PurchaseDto>(`${this.baseUrl}/products/${productId}/purchase`);
   }
 
+  getUserPurchaseReport(): Observable<Blob> {
+    return this.http.get('http://localhost:8080/api/admin/reports/users-purchases', {
+      responseType: 'blob'  // important for PDF
+    });
+  }
+
 }
 
 

@@ -20,6 +20,10 @@
     </tbody>
 </table>
 
+<button (click)="openReport()" class="btn btn-report">
+    Show Report
+</button>
+
 <div *ngIf="!loading && users.length === 0">
     <p>No users found.</p>
 </div>
