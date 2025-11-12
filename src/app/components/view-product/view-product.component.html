@@ -25,7 +25,8 @@
         <p *ngIf="product.ageSexGroup">Target group: {{ product.ageSexGroup }}</p>
 
         <div class="actions">
-            <button class="buy-btn" (click)="buyProduct()" [disabled]="product.sold">Buy</button>
+            <button class="buy-btn" (click)="buyProduct()" [disabled]="product.sold">{{ !product.sold ? 'Buy' : 'Product
+                sold' }}</button>
 
             <!-- ❤️ Favourites button -->
             <button class="fav-btn" [ngClass]="{ 'liked': isProductLiked }" (click)="toggleFavourite()">

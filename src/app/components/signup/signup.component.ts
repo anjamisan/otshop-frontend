@@ -61,13 +61,12 @@ export class SignupComponent {
     this.authService.signup(newUser)
       .subscribe({
         next: (user: UserDTO) => {
-          this.message = `Welcome ${user.username}!`;
+          this.message = `Welcome ${user.username}. You can now log in!`;
           setTimeout(() => {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/login']);
           }, 2000);
-          this.router.navigate(['/login']);
 
-          // You might check response.message here if needed
+
         },
         // 🔑 FIX 2: Explicitly define the error type
         error: (err: HttpErrorResponse) => {

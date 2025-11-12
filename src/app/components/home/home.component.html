@@ -1,29 +1,49 @@
-<div class="home-container">
-    <h2>All Products</h2>
+<div class="filters">
+    <label>
+        Age/Sex:
+        <select [(ngModel)]="selectedAgeSexGroup" (change)="onAgeSexChange()">
+            <option [ngValue]="null">All</option>
+            <option *ngFor="let a of agesexList" [value]="a.ageSexGroup">{{ a.ageSexGroup }}</option>
+        </select>
+    </label>
 
-    <p *ngIf="loading">Loading products...</p>
-    <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+    <label>
+        Category:
+        <select [(ngModel)]="selectedCategoryName" (change)="onCategoryChange()">
+            <option [ngValue]="null">All</option>
+            <option *ngFor="let c of categoryList" [value]="c.categoryName">{{ c.categoryName }}</option>
+        </select>
+    </label>
 
-    <div class="product-grid">
-        <div class="product-card" *ngFor="let p of products">
-            <div class="image-wrapper">
-                <img [src]="p.imageUrls && p.imageUrls.length > 0 ? ('http://localhost:8080' + p.imageUrls[0]) : 'assets/no-image.png'"
-                    alt="{{ p.productName }}" class="product-thumb" />
+    <label>
+        Condition:
+        <select [(ngModel)]="selectedCondition" (change)="onConditionChange()">
+            <option [ngValue]="null">All</option>
+            <option *ngFor="let c of conditionList" [value]="c.value">{{ c.label }}</option>
+        </select>
+    </label>
 
-                <!-- ✅ SOLD badge -->
-                <div *ngIf="p.sold" class="sold-badge">SOLD</div>
-            </div>
-            <h3>{{ p.productName }}</h3>
-            <p class="price">{{ p.price }} RSD</p>
-            <p class="condition">{{ p.condition | conditionLabel }}</p>
+    <button (click)="onSortChange()">Sort by Price ({{ sortDirection }})</button>
+</div>
+<h2>Secondhand Shop</h2>
+<hr />
 
-            <button [routerLink]="['/products', p.idProduct]" [disabled]="!isLoggedIn" class="view-btn">
-                View
-            </button>
+<div *ngIf="loading">Loading products...</div>
+<p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
 
-            <p *ngIf="!isLoggedIn" class="login-msg">
-                Log in to view product
-            </p>
+<div class="product-grid">
+    <div *ngFor="let p of filteredProducts" class="product-card">
+        <div class="image-wrapper">
+            <img [src]="p.imageUrls && p.imageUrls.length > 0 ? ('http://localhost:8080' + p.imageUrls[0]) : 'assets/no-image.png'"
+                alt="{{ p.productName }}" class="product-thumb" />
+            <div *ngIf="p.sold" class="sold-badge">SOLD</div>
         </div>
+
+        <h3>{{ p.productName }}</h3>
+        <p>{{ p.price | currency:'RSD':'symbol' }}</p>
+
+        <button [disabled]="!isLoggedIn" (click)="viewProduct(p.idProduct)">
+            {{ isLoggedIn ? 'View' : 'Log in to view product' }}
+        </button>
     </div>
 </div>

@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserDTO } from '../../auth/models/user-dto';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true, // You are using standalone components
   imports: [
-    FormsModule // 🔑 Add FormsModule to the imports array
+    FormsModule,
+    CommonModule
   ],
-  template: `
-    <input [(ngModel)]="username" placeholder="Username/Email">
-    <input [(ngModel)]="password" placeholder="Password" type="password">
-    <button (click)="onLogin()">Login</button>
-    <p style="color:red">{{ message }}</p>
-  `
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   username = '';
