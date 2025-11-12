@@ -44,11 +44,11 @@ export class AdminService {
   }
 
   updateProduct(id: number, payload: { description: string; price: number }): Observable<ProductDto> {
-    return this.http.put<ProductDto>(`${this.baseUrl}/products/${id}`, payload);
+    return this.http.put<ProductDto>(`${this.baseUrl}/admin/products/${id}`, payload);
   }
 
   deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/products/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/admin/products/${id}`);
   }
 
   getAllUsers(): Observable<UserSummaryDto[]> {

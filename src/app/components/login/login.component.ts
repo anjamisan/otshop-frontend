@@ -59,11 +59,12 @@ export class LoginComponent {
         },
         error: (err: HttpErrorResponse) => {
           // greska
-          if (err.status === 401) {
+          if (err.status === 401 || err.status === 403) {
             this.message = 'Invalid username or password. Please try again.';
           } else {
             this.message = 'Login failed. Please check your connection.';
           }
+          this.message = 'Login failed. Please check your connection.';
           this.messageColor = 'red';
           console.error('Login Error:', err);
 
