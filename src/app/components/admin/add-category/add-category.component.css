@@ -56,3 +56,20 @@ select:focus {
 .btn:hover {
     background: #0056b3;
 }
+
+input.ng-touched.ng-invalid,
+select.ng-touched.ng-invalid {
+    border-color: #dc3545;
+    /* Red border */
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.4);
+    background-color: #fff8f8;
+    /* Very light red background */
+}
+
+.validation-message {
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: #dc3545;
+    /* Red text to highlight the error */
+    font-weight: 500;
+}

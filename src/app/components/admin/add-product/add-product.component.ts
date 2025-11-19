@@ -30,7 +30,7 @@ export class AddProductComponent implements OnInit {
   ageSexList: AgesexDto[] = [];
   categoriesForSelected: CategoryDto[] = [];
 
-  // UI state
+  // UI stanje
   loadingAgeSex = false;
   loadingCategories = false;
   submitting = false;

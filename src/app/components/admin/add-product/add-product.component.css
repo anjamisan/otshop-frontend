@@ -89,3 +89,27 @@ button[disabled] {
     border-radius: 6px;
     border: 1px solid #ccc;
 }
+
+.form-status {
+    padding: 8px 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.form-status.valid {
+    background-color: #e6ffed;
+    /* Light green */
+    color: #00702d;
+    /* Dark green text */
+    border: 1px solid #00c853;
+}
+
+.form-status.invalid {
+    background-color: #ffe6e6;
+    /* Light red */
+    color: #b71c1c;
+    /* Dark red text */
+    border: 1px solid #d32f2f;
+}

@@ -1,39 +1,40 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
+
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
 import { AuthService } from './auth/service/auth.service';
-import { CommonModule } from '@angular/common';
 import { UserDTO } from './auth/models/user-dto';
-import { filter } from 'rxjs';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { UserCardComponent } from './components/profile-card/profile-card.component';
+import { map } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    CommonModule,
+    UserCardComponent,
+    NgIf,
+    AsyncPipe
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
-  protected readonly title = signal('otshop-frontend');
-  isLoggedIn = false;
-  isAdmin = false;
+export class App {
+  currentUser$;
+  title = 'otshop-frontend';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService) { this.currentUser$ = this.authService.currentUser$; }
 
-  ngOnInit() {
-    this.authService.isLoggedInObs$.subscribe(
-      (status: boolean) => (this.isLoggedIn = status)
-    );
-    this.authService.currentUser$
-      .pipe(filter((user): user is UserDTO => !!user)) // type-narrowing filter
-      .subscribe(user => {
-        this.isAdmin = !!user.admin;
-      });
-  }
-
-  logout() {
+  // isAdmin() {
+  //   return this.currentUser$.pipe(
+  //     map((user: UserDTO | null) => !!user?.admin)
+  //   );
+  // }
+  onLogout() {
     this.authService.logout();
-    this.router.navigate(['/home']);
   }
 }

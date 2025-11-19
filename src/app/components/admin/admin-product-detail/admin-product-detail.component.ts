@@ -29,11 +29,9 @@ export class AdminProductDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private api: AdminService) { }
 
   ngOnInit(): void {
-    // Extract product ID from route
+    // uzmi id iz rute
     const productId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadProduct(productId);
-    // Fetch product from backend
-
   }
 
   loadProduct(productId: number): void {

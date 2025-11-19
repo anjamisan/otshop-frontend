@@ -11,25 +11,25 @@ import { EditProductComponent } from './components/admin/edit-product/edit-produ
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { UserDetailsComponent } from './components/admin/user-details/user-details.component';
 import { ViewProductComponent } from './components/view-product/view-product.component';
-import { ProfileComponent } from './components/profile/profile.component';
 import { MyPurchasesComponent } from './components/my-purchases/my-purchases.component';
 import { MyFavouritesComponent } from './components/my-favourites/my-favourites.component';
+import { AuthGuard } from './auth/auth-guard';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'home', component: HomeComponent },
-    { path: 'profile', component: ProfileComponent },
-    { path: 'admin', component: AdminDashboardComponent },
-    { path: 'admin/add-product', component: AddProductComponent },
-    { path: 'admin/add-category', component: AddCategoryComponent },
-    { path: 'admin/products', component: AdminViewProductsComponent },
-    { path: 'admin/product/:id', component: AdminProductDetailComponent },
-    { path: 'admin/product/:id/edit', component: EditProductComponent },
-    { path: 'admin/users', component: UserListComponent },
-    { path: 'admin/users/:id', component: UserDetailsComponent },
-    { path: 'products/:id', component: ViewProductComponent },
-    { path: 'my-purchases', component: MyPurchasesComponent },
-    { path: 'my-favourites', component: MyFavouritesComponent }
+    { path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard] },
+    { path: 'admin/add-product', component: AddProductComponent, canActivate: [AuthGuard] },
+    { path: 'admin/add-category', component: AddCategoryComponent, canActivate: [AuthGuard] },
+    { path: 'admin/products', component: AdminViewProductsComponent, canActivate: [AuthGuard] },
+    { path: 'admin/product/:id', component: AdminProductDetailComponent, canActivate: [AuthGuard] },
+    { path: 'admin/product/:id/edit', component: EditProductComponent, canActivate: [AuthGuard] },
+    { path: 'admin/users', component: UserListComponent, canActivate: [AuthGuard] },
+    { path: 'admin/users/:id', component: UserDetailsComponent, canActivate: [AuthGuard] },
+    { path: 'products/:id', component: ViewProductComponent, canActivate: [AuthGuard] }, //parametar rute je id
+    { path: 'my-purchases', component: MyPurchasesComponent, canActivate: [AuthGuard] },
+    { path: 'my-favourites', component: MyFavouritesComponent, canActivate: [AuthGuard] },
+    { path: '', component: HomeComponent }, //default ruta
+    { path: '**', redirectTo: '' }, //wildcard ruta
 ];

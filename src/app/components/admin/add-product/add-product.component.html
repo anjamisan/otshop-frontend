@@ -1,19 +1,21 @@
+<!-- TEMPLATE FORM -->
+
 <div class="form-container">
     <h2>Add New Product</h2>
 
     <div class="alert error" *ngIf="errorMsg">{{ errorMsg }}</div>
     <div class="alert success" *ngIf="successMsg">{{ successMsg }}</div>
 
-    <form (ngSubmit)="onSubmit()">
-        <!-- existing fields -->
+    <!-- SELEKTOR ZA NGFORM i formRef-->
+    <form #formRef="ngForm" (ngSubmit)="onSubmit()">
         <label>Product Name *</label>
-        <input type="text" [(ngModel)]="productName" name="productName" required />
+        <input type=" text" [(ngModel)]="productName" name="productName" required /> <!-- MORA DA POSTOJI NAME -->
 
         <label>Description</label>
         <textarea [(ngModel)]="description" name="description" rows="3"></textarea>
 
         <label>Condition *</label>
-        <select [(ngModel)]="condition" name="condition" required>
+        <select [(ngModel)]="condition" name="condition" required> <!-- VALIDACIJA -->
             <option value="" disabled>Select condition...</option>
             <option *ngFor="let c of conditions" [value]="c.value">{{ c.label }}</option>
         </select>
@@ -37,7 +39,7 @@
             <option *ngFor="let c of categoriesForSelected" [ngValue]="c.idCategory">{{ c.categoryName }}</option>
         </select>
 
-        <!-- 🖼️ Image Upload -->
+        <!-- slike -->
         <label>Product Images *</label>
         <input type="file" (change)="onFileSelected($event)" multiple accept="image/*" />
         <div class="preview-container" *ngIf="selectedFiles.length > 0">
@@ -49,5 +51,13 @@
         </div>
 
         <button type="submit" [disabled]="submitting">Add Product</button>
+
+        <div class="form-status valid" *ngIf="formRef.valid">
+            ✅ Form is filled properly!
+        </div>
+
+        <div class="form-status invalid" *ngIf="formRef.invalid">
+            ❌ Form is not filled properly. Please check required fields (*).
+        </div>
     </form>
 </div>

@@ -33,14 +33,13 @@ import { Router } from '@angular/router';
       <p [ngStyle]="{color: message.startsWith('SUCCESS') ? 'green' : 'red'}">{{ message }}</p>
     </div>
   `,
-  styleUrls: ['./signup.component.css'] // You'll define the toggle styles here
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  // 1. Data Model
+
   username = '';
   password = '';
   email = '';
-  //isAdmin = false; // Default: Regular user
 
   message = '';
 
@@ -49,8 +48,6 @@ export class SignupComponent {
   onSignup() {
     this.message = 'Processing registration...';
 
-    // 2. Prepare the DTO (We will create a separate RegistrationDTO structure)
-    // NOTE: This assumes your Spring backend has a registration endpoint /register
     const newUser: SignupDto = {
       username: this.username,
       password: this.password,
@@ -68,7 +65,7 @@ export class SignupComponent {
 
 
         },
-        // 🔑 FIX 2: Explicitly define the error type
+
         error: (err: HttpErrorResponse) => {
           this.message = 'FAILURE: Registration failed. Status: ' + err.status;
           console.error('Registration Error:', err);

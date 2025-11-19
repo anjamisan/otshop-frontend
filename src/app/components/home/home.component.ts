@@ -24,8 +24,9 @@ export class HomeComponent implements OnInit {
   loading = false;
   errorMsg = '';
   isLoggedIn = false;
+  currentUser$;
 
-  // Dropdowns
+  // Dropdownovi
   agesexList: AgesexDto[] = [];
   categoryList: CategoryDto[] = [];
   conditionList = [
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit {
     { value: 'SATISFACTORY', label: 'Satisfactory' }
   ];
 
-  // Selected filters
+  // Selektovani filteri
   selectedAgeSexGroup: string | null = null;
   selectedCategoryName: string | null = null;
   selectedCondition: string | null = null;
@@ -46,10 +47,13 @@ export class HomeComponent implements OnInit {
     private api: AdminService,
     private router: Router,
     private authService: AuthService
-  ) { }
+  ) { this.currentUser$ = this.authService.currentUser$; }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
+    //provera jel user ulogovan
+    this.currentUser$.subscribe(user => {
+      this.isLoggedIn = user != null;
+    });
     this.fetchProducts();
     this.fetchAgeSex();
   }

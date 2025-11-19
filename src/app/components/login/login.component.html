@@ -11,6 +11,6 @@
 
         <button type="submit" class="btn-login">Log In</button>
 
-        <p *ngIf="message" class="error-message">{{ message }}</p>
+        <p *ngIf="message" class="error-message" [style.color]="messageColor">{{ message }}</p>
     </form>
 </div>

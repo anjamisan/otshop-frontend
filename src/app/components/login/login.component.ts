@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  standalone: true, // You are using standalone components
+  standalone: true,
   imports: [
     FormsModule,
     CommonModule
@@ -58,13 +58,16 @@ export class LoginComponent {
           }, 2000);
         },
         error: (err: HttpErrorResponse) => {
+
+          console.log("ERR STATUS:", err.status);
+          console.log("ERR BODY:", err.error);
+
           // greska
           if (err.status === 401 || err.status === 403) {
             this.message = 'Invalid username or password. Please try again.';
           } else {
             this.message = 'Login failed. Please check your connection.';
           }
-          this.message = 'Login failed. Please check your connection.';
           this.messageColor = 'red';
           console.error('Login Error:', err);
 

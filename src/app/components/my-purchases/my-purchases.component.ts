@@ -46,7 +46,6 @@ export class MyPurchasesComponent implements OnInit {
           return;
         }
 
-        // Fetch product details for each purchase
         const productRequests = purchaseList.map(p =>
           this.adminService.getProductById(p.productId)
         );

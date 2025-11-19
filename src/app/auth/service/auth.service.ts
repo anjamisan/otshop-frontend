@@ -1,28 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpBackend, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, EMPTY, filter, map, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, filter, map, Observable, switchMap, tap, throwError } from 'rxjs';
 import { UserDTO } from '../models/user-dto';
 import { LoginRequestDTO } from '../models/log-req-dto';
 import { AuthResponseDTO } from '../models/response-dto';
 import { jwtDecode } from 'jwt-decode';
 import { SignupDto } from '../models/signup-dto';
 
-// Usage: jwt_decode(token); 
-// OR sometimes: jwt_decode.default(token); (Less likely with modern Angular)
-
-// Define the expected structure of the token payload for strong typing
 interface JwtPayload {
   exp: number; // Expiration timestamp (seconds)
-  user?: Partial<UserDTO>; // User data, may be missing
-  // Add other claims like 'iat', 'sub', 'roles', etc. if present
+  user?: Partial<UserDTO>;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // Base URL for the Spring Auth Controller
-  private authUrl = 'http://localhost:8080/api/auth'; //NAMESTI DA BUDE OVO
+
+  private authUrl = 'http://localhost:8080/api/auth';
   private readonly TOKEN_KEY = 'jwt_token';
 
   private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);
@@ -33,10 +28,9 @@ export class AuthService {
     private http: HttpClient,
     private httpBackend: HttpBackend
   ) {
-    // ✅ initialize it here, after httpBackend exists
+
     this.httpWithoutInterceptor = new HttpClient(this.httpBackend);
 
-    // then safely load user state
     this.loadUserState();
   }
 
@@ -44,7 +38,6 @@ export class AuthService {
 
   private decodeJwt(token: string): JwtPayload | null {
     try {
-      // The library handles splitting, Base64 decoding, and JSON parsing securely
       const payload = jwtDecode<JwtPayload>(token);
       return payload;
     } catch (e) {
@@ -58,7 +51,7 @@ export class AuthService {
     return this.http.post<UserDTO>(`${this.authUrl}/signup`, registrationData)
       .pipe(
         tap((user: UserDTO) => {
-          console.log(`✅ Signup successful for ${user.username}`);
+          console.log(`Signup successful for ${user.username}`);
         })
       );
   }
@@ -70,17 +63,15 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.storeAuthData(response);
-          // Push the new user to the stream
-          //this.currentUserSubject.next(response.user);
         }),
         // switchMap automatically replaces the previous observable with the next
         switchMap(() => this.profile() as Observable<UserDTO>),
         tap(user => {
-          console.log("✅ User profile loaded after login:", user);
+          console.log("User profile loaded after login:", user);
         }),
         catchError((err: HttpErrorResponse) => {
-          console.error("❌ Login or profile fetch failed:", err);
-          return EMPTY;
+          console.error("Login or profile fetch failed:", err);
+          return throwError(() => err);
         })
 
       );
@@ -90,7 +81,7 @@ export class AuthService {
     const token = this.getAuthToken();
 
     if (!token) {
-      console.warn('⚠️ No token found when trying to fetch profile.');
+      console.warn('No token found when trying to fetch profile.');
       return EMPTY;
     }
 
@@ -102,10 +93,10 @@ export class AuthService {
       }),
       catchError(err => {
         if (err.status === 401 || err.status === 403) {
-          console.warn('⚠️ Unauthorized - token may be invalid or expired');
+          console.warn('Unauthorized - token may be invalid or expired');
           this.logout();
         } else {
-          console.error('❌ Error fetching profile:', err);
+          console.error('Error fetching profile:', err);
         }
         return EMPTY;
       })
@@ -131,12 +122,10 @@ export class AuthService {
 
   private isTokenValid(exp: number): boolean {
     const now = Date.now() / 1000;
-    // Allow a 5-second buffer for clock skew
     return exp > (now + 5);
   }
 
   isLoggedIn(): boolean {
-    // Check if the token exists (and maybe check its expiration time)
     return !!this.getAuthToken();
   }
   isLoggedInObs$ = this.currentUser$.pipe(map(user => user !== null));
@@ -146,13 +135,13 @@ export class AuthService {
     if (token) {
       const decoded = this.decodeJwt(token);
       if (decoded && this.isTokenValid(decoded.exp)) {
-        // ✅ Fetch profile from backend to restore session
+
         this.profile().subscribe({
-          next: user => console.log("✅ Session restored for:", user.username),
-          error: err => console.error("❌ Failed to restore session:", err)
+          next: user => console.log("Session restored for:", user.username),
+          error: err => console.error("Failed to restore session:", err)
         });
       } else {
-        console.warn("⚠️ Token expired or invalid, logging out...");
+        console.warn("Token expired or invalid, logging out...");
         this.logout();
       }
     } else {

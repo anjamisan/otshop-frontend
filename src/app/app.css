@@ -1,14 +1,15 @@
+/* FIXED TOP HEADER */
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #ffffff;
+    background: white;
     border-bottom: 1px solid #e0e0e0;
     z-index: 1000;
 }
 
-/* ✅ This is now the main flex container */
+/* MAIN NAVBAR CONTAINER */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -16,57 +17,46 @@ header {
     padding: 12px 24px;
 }
 
-/* Styling for links */
-.navbar a {
-    text-decoration: none;
+/* LEFT SIDE */
+.nav-left a {
+    font-size: 1.2rem;
+    font-weight: 600;
     color: #333;
-    margin-right: 16px;
-    font-weight: 500;
-    transition: color 0.2s ease;
+    text-decoration: none;
+    padding: 20px;
 }
 
-.navbar a:hover {
+.nav-left a:hover {
     color: #007bff;
 }
 
-/* Left (home) */
-.nav-left a {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-/* Right group (login/profile/logout) */
+/* RIGHT SIDE (user card OR login/signup) */
 .nav-right {
     display: flex;
     align-items: center;
-    margin-left: auto;
-    /* ✅ push to far right */
+    gap: 15px;
 }
 
-.profile-link {
-    background-color: #007bff;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 20px;
-    margin-right: 16px;
-    font-weight: 600;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* LOGIN + SIGNUP LINKS */
+.auth-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    margin-left: 16px;
 }
 
-.profile-link:hover {
-    background-color: #0056b3;
+.auth-links a:hover {
+    color: #007bff;
 }
 
-.logout-link {
-    color: #ff3b30;
-    cursor: pointer;
+/* USER CARD OVERRIDE TO SIT NICELY IN NAV */
+app-user-card {
+    position: relative;
+    top: unset !important;
+    right: unset !important;
 }
 
-.logout-link:hover {
-    text-decoration: underline;
-}
-
-/* Account for fixed header height */
+/* OFFSET MAIN CONTENT FROM FIXED NAVBAR */
 main {
-    margin-top: 70px;
+    margin-top: 80px;
 }

@@ -27,13 +27,12 @@ export class UserDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userId = Number(this.route.snapshot.paramMap.get('id'));
+    this.userId = Number(this.route.snapshot.paramMap.get('id')); //uzima parametar iz rute
     this.loadUserData();
     this.loadUserPurchases();
   }
 
   loadUserData(): void {
-    // You already have all users in summary API — optionally reuse that
     this.api.getAllUsers().subscribe(users => {
       this.user = users.find(u => u.idUser === this.userId);
     });

@@ -1,27 +1,42 @@
 <header>
-    <nav class="navbar">
-        <div class="nav-left">
-            <a [routerLink]="isAdmin ? '/admin' : '/'">Home</a>
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
 
-        <div class="nav-right" *ngIf="isLoggedIn; else loggedOutLinks">
+        <div class="container-fluid">
 
+            <!-- Left side -->
+            <div class="navbar-nav me-auto">
 
-            <ng-container *ngIf="!isAdmin">
-                <a routerLink="/my-purchases">My purchases</a>
-                <a routerLink="/my-favourites">Liked products</a>
-            </ng-container>
+                <a class="nav-link" [routerLink]="(currentUser$ | async)?.admin ? '/admin' : '/'">
+                    Home
+                </a>
 
-            <a routerLink="/profile" class="profile-link">Profile</a>
-            <a (click)="logout()" class="logout-link">Log out</a>
-        </div>
+                <ng-container *ngIf="!((currentUser$ | async)?.admin)">
+                    <a class="nav-link" routerLink="/my-purchases">My purchases</a>
+                    <a class="nav-link" routerLink="/my-favourites">Liked products</a>
+                </ng-container>
 
-        <ng-template #loggedOutLinks>
-            <div class="nav-right">
-                <a routerLink="/login">Log in</a>
-                <a routerLink="/signup">Sign up</a>
             </div>
-        </ng-template>
+
+            <!-- Right side -->
+            <div class="d-flex align-items-center">
+
+                <!-- Child component (user profile card) -->
+                <app-user-card *ngIf="(currentUser$ | async) as user; else notLoggedIn" [user]="user"
+                    (logout)="onLogout()">
+                </app-user-card>
+
+                <!-- Not logged in -->
+                <ng-template #notLoggedIn>
+                    <div class="d-flex gap-3">
+                        <a class="btn btn-outline-light btn-sm" routerLink="/signup">Sign up</a>
+                        <a class="btn btn-light btn-sm" routerLink="/login">Login</a>
+                    </div>
+                </ng-template>
+
+            </div>
+
+        </div>
+
     </nav>
 </header>
 
@@ -30,5 +45,5 @@
 </main>
 
 <footer class="text-center text-muted mt-4">
-    <small>© 2025 Secondhand Shop</small>
+    <small>© 2025 Online Thrift Shop</small>
 </footer>
