@@ -1,6 +1,7 @@
 # OtshopFrontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.  
+It communicates with the Spring Boot backend to handle authentication, product browsing, and user functionality.
 
 ## Development server
 
